@@ -1,7 +1,10 @@
+name: AWS Lambda function Authentication With Sam
+
 on:
   push:
     branches:
       - main
+      - 'release/*'
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -29,6 +32,7 @@ jobs:
       - name: Validating template using SAM
         run: sam validate
 
+        if: startsWith(github.ref, 'refs/heads/release/') || github.ref == 'refs/heads/main'
       # Empacotamento da função Lambda
       - name: Package Lambda using SAM
         run: sam package --s3-bucket ${{ env.AWS_S3_BUCKET }} --output-template-file packaged.yaml
