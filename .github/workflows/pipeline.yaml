@@ -37,7 +37,7 @@ jobs:
         if: startsWith(github.ref, 'refs/heads/release/') || github.ref == 'refs/heads/main'
       # Empacotamento da função Lambda
       - name: Package Lambda using SAM
-        run: sam package --s3-bucket ${{ env.AWS_S3_BUCKET }} --output-template-file packaged.yaml
+        run: sam package --output-template-file packaged.yaml
 
       # Build inside Docker containers
       - run: sam build --use-container
