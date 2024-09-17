@@ -1,3 +1,5 @@
+name: AWS Lambda function Authentication With Sam
+
 on:
   push:
     branches:
