@@ -13,14 +13,14 @@ import http from 'http';
 
 type GenericType<T = any> = any
 
-const API_URL=''
-const API_ACCESS_TOKEN=''
-
+const API_UR = process.env.API_URL ?? 'http://localhost:3000'
+const API_ACCESS_TOKEN = process.env.API_ACCESS_TOKEN ?? ''
 
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const cnpj = event.queryStringParameters?.cnpj
+        const authorization = event.headers?.Authorization
 
         if (!cnpj) {
             return {
@@ -29,7 +29,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             }
         }
 
-        const isClientAuthorized = await authorize(cnpj)
+        const isClientAuthorized = await authorize(cnp, authorization)
 
         if (!isClientAuthorized) {
             return {
@@ -51,13 +51,13 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
     }
 };
 
-const authorize = async (cnpj: string): Promise<GenericType> => {
-    const rootApiUrl = process.env.API_URL ?? API_URL
+const authorize = async (cnpj: string, authorization: string): Promise<GenericType> => {
+    const rootApiUrl =  ?? API_URL
     const url = `${rootApiUrl}/v1/api/client?cpf=${cnpj}`
     const request = url.includes('https') ? https : http
 
     return new Promise((resolve, reject) => {
-        const req = request.get(url, { headers: { Authorization: process.env.API_ACCESS_TOKEN || API_ACCESS_TOKEN } }, (res) => {
+        const req = request.get(url, { headers: { Authorization: authorization  ?? API_ACCESS_TOKEN } }, (res) => {
             let data = ''
 
             res.on('data', (chunk: GenericType) => {
