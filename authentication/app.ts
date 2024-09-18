@@ -17,7 +17,6 @@ const API_UR = process.env.API_URL ?? 'http://localhost:3000'
 const API_ACCESS_TOKEN = process.env.API_ACCESS_TOKEN ?? ''
 
 
-
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const cnpj = event.queryStringParameters?.cnpj
