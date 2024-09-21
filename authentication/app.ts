@@ -29,7 +29,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             }
         }
 
-        const isClientAuthorized = await authorize(cnp, authorization)
+        const isClientAuthorized = await authorize(cnpj, authorization)
 
         if (!isClientAuthorized) {
             return {
