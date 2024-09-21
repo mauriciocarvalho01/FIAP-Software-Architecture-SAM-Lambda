@@ -13,7 +13,7 @@ import http from 'http';
 
 type GenericType<T = any> = any
 
-const API_UR = process.env.API_URL ?? 'http://localhost:3000'
+const API_URL = process.env.API_URL ?? 'http://localhost:3000'
 const API_ACCESS_TOKEN = process.env.API_ACCESS_TOKEN ?? ''
 
 
@@ -52,7 +52,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
 };
 
 const authorize = async (cnpj: string, authorization: string): Promise<GenericType> => {
-    const rootApiUrl =  ?? API_URL
+    const rootApiUrl = API_URL
     const url = `${rootApiUrl}/v1/api/client?cpf=${cnpj}`
     const request = url.includes('https') ? https : http
 
